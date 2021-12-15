@@ -20,13 +20,23 @@
     </div>
 
     <script>
-      window.ethereum._handleChainChanged(handleChainChanged);
+      window.ethereum.on("chainChanged", handleChainChanged);
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
       function handleChainChanged(_chainId) {
-        if (_chainId != "97") {
-          window.userWalletAddress = null;
-          alert("Switch to BSC Testnet");
+        window.userWalletAddress = null;
+        if (_chainId != "97") alert("Please switch to BSC Testnet");
+      }
+
+      function handleAccountsChanged(accounts) {
+        if (accounts.length === 0) {
+
+          console.log("Please connect to MetaMask.");
+        } else if (accounts[0] !== currentAccount) {
+          window.userWalletAddress = accounts[0];
+          // Do any other work!
         }
       }
+
       const loginButton = document.getElementById("loginButton");
       const userWallet = document.getElementById("userWallet");
 
@@ -57,6 +67,7 @@
         }
         if (window.ethereum.networkVersion !== "97") {
           alert("Switch to BSC Testnet");
+          return;
         }
 
         window.userWalletAddress = accounts[0];
