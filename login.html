@@ -16,9 +16,9 @@
       >
         Login with MetaMask
       </button>
-      <p id="userWallet" class="text-lg text-gray-600 my-2"></p>
+      <p class="text-lg text-gray-600 my-2">Connected: <span id="userWallet"></span></p>
     </div>
-
+    <a  id="btnPlay" hidden class="mx-auto rounded-md p-2 bg-purple-500 text-white" href="index.html"> Play game</a>
     <script>
       window.ethereum.on("chainChanged", handleChainChanged);
       window.ethereum.on("accountsChanged", handleAccountsChanged);
@@ -69,7 +69,7 @@
           alert("Switch to BSC Testnet");
           return;
         }
-
+        
         window.userWalletAddress = accounts[0];
         userWallet.innerText = window.userWalletAddress;
         loginButton.innerText = "Sign out of MetaMask";
@@ -78,6 +78,7 @@
         setTimeout(() => {
           loginButton.addEventListener("click", signOutOfMetaMask);
         }, 200);
+        document.getElementById('btnPlay').removeAttribute('hidden');
       }
 
       function signOutOfMetaMask() {
